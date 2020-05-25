@@ -1,0 +1,378 @@
+#Gregory Tolmochow
+#Create Task
+
+import random
+import math
+import time
+
+#For my create task I have designed the game blackjack or 21
+#Howver to add some extra pazaz I have added extra players as well as a counter for the player's winning in which at the end of the game, there will be a winner
+
+playercard = []
+dealercard = []
+playercard2 = []
+playercard3 = []
+playercard4 = []
+money = [200]
+money2 = [200]
+money3 = [200]
+money4 = [200]
+
+
+def cards():
+
+    
+    global name
+    name = input('What is you name: ')
+    print('Hello ' + str(name) + ' welcome to the table, please play responsibly')
+    time.sleep(2)
+    print('You are only given 200 dollars to start the game')
+
+    global bet
+    bet = int(input('How much would you like to bet for the first round(input an integer): '))
+    
+    if bet > int(money[0]):
+            print('You do not have enough money to place that bet, please enter a new value')
+            cbet = int(input('Please reenter a correct amount here: '))
+            bet = cbet 
+
+    global bet2
+    bet2 = round(int(bet)/2)
+    global bet3
+    bet3 = round(int(bet2*3/2))
+    while bet3 > 200:
+        int(bet3)-100
+    global bet4
+    bet4 = (round(int(bet)/3))
+
+    print('The other bets are in: player 2 has bet '+ str(bet2) + ' dollars. player 3 has bet '+ str(bet3)+ ' dollars. player 4 has bet ' + str(bet4) + ' dollars.')
+
+    while len(dealercard) != 2:
+        dealercard.append(random.randint(1,11))
+    if len(dealercard) == 2:
+        print ("Dealer's cards: ? and ", dealercard[1])
+
+    global seatingorder
+    seatingorder = [name, 'player 2', 'player 3', 'player4', 'player5']
+    random.shuffle(seatingorder)
+    print ('The seating order is: ', seatingorder)
+
+    print("The dealer begins to lay out the cards")
+    for i in range(0,5):
+        if seatingorder[i] == name:
+            while len(playercard) != 2:
+                playercard.append(random.randint(1,11))
+            if len(playercard) == 2:
+                print ('Your cards are ' + str(playercard[0]) + ' and ' + str(playercard[1]))
+        elif seatingorder[i] == 'player 2':
+            while len(playercard2) != 2:
+                playercard2.append(random.randint(1,11))
+            if len(playercard2) == 2:
+                print ('Player 2 has a ' + str(playercard2[0]) + ' and a ' + str(playercard2[1]))
+        elif seatingorder[i] == 'player 3':
+            while len(playercard3) != 2:
+                playercard3.append(random.randint(1,11))
+            if len(playercard3) == 2:
+                print ('Player 3 has a ' + str(playercard3[0]) + ' and a ' + str(playercard3[1]))
+        elif seatingorder[i] == 'player4':
+            while len(playercard4) != 2:
+                playercard4.append(random.randint(1,11))
+            if len(playercard4) == 2:
+                print ('Player 4 has a ' + str(playercard4[0]) + ' and a ' + str(playercard4[1]))
+
+    #if you or anyone else scores 21 right away
+    #dealer
+    if sum(dealercard) == 21:
+        print('Sorry but the Dealer has 21, you lose!')
+        newmoney = int(money[0]- bet)
+        newmoneyplayer2 = int(money2[0] - bet2)
+        newmoneyplayer3 = int(money3[0] - bet3)
+        newmoneyplayer4 = int(money4[0] - bet4 )
+        print('You are now left with ' + str(newmoney) + ' dollars.')
+        print('The remanining players are left with: player 2 has ' + str(newmoneyplayer2)+ ' dollars. player 3 has ' + str(newmoneyplayer3) + ' dollars. player 4 has ' + str(newmoneyplayer4) + 'dollars.')
+    elif sum(dealercard) > 21: 
+        print('The dealer has busted, you have now won')
+        newmoney == int(money[0] + bet)
+        print('You now have '+ str(newmoney)+ 'dollars.')
+     #you
+    if sum(playercard) == 21:
+        print('You won, BlackJack!')
+        newmoney = int((2*bet)+money[0])
+        playercard.append(0)
+        newmoneyplayer2 = int(money2[0] - bet2)
+        newmoneyplayer3 = int(money3[0] - bet3)
+        newmoneyplayer4 = int(money4[0] - bet4 )
+        print('You are now left with ' + str(newmoney) + ' dollars.')
+        print('The remanining players are left with: player 2 has ' + str(newmoneyplayer2)+ ' dollars. player 3 has ' + str(newmoneyplayer3) + ' dollars. player 4 has ' + str(newmoneyplayer4) + ' dollars.')
+    #player2
+    if sum(playercard2) == 21:
+        print('Sorry but the player1 has 21, you lose!')
+        newmoney = int(money[0]- bet)
+        newmoneyplayer2 = int((2*bet2)+money2[0])
+        newmoneyplayer3 = int(money3[0] - bet3)
+        newmoneyplayer4 = int(money4[0] - bet4 )
+        print('You are now left with ' + str(newmoney) + ' dollars.')
+        print('The remanining players are left with: player 2 has ' + str(newmoneyplayer2)+ ' dollars. player 3 has ' + str(newmoneyplayer3) + ' dollars. player 4 has ' + str(newmoneyplayer4) + ' dollars.')
+    #player3
+    if sum(playercard3) == 21:
+        print('Sorry but the Dealer has 21, you lose!')
+        newmoney = int(money[0]- bet)
+        newmoneyplayer2 = int(money2[0] - bet2)
+        newmoneyplayer3 = int((2*bet3)+money3[0])
+        newmoneyplayer4 = int(money4[0] - bet4 )
+        print('You are now left with ' + str(newmoney) + ' dollars.')
+        print('The remanining players are left with: player 2 has ' + str(newmoneyplayer2)+ ' dollars. player 3 has ' + str(newmoneyplayer3) + ' dollars. player 4 has ' + str(newmoneyplayer4) + ' dollars.')
+    #player4
+    if sum(playercard4) == 21:
+        print('Sorry but the Dealer has 21, you lose!')
+        newmoney = int(money[0]- bet)
+        newmoneyplayer2 = int(money2[0] - bet2)
+        newmoneyplayer3 = int(money3[0] - bet3)
+        newmoneyplayer4 = int((2*bet4)+money4[0])
+        print('You are now left with ' + str(newmoney) + ' dollars.')
+        print('The remanining players are left with: player 2 has ' + str(newmoneyplayer2)+ ' dollars. player 3 has ' + str(newmoneyplayer3) + ' dollars. player 4 has ' + str(newmoneyplayer4) + ' dollars.')
+    
+    return (name and seatingorder and bet and bet2 and bet3 and bet4)
+
+def check():#enable global
+    cards()
+    print (name)
+    print (seatingorder)
+    print(bet)
+    print(bet2)
+    print(bet3)
+    print(bet4)
+
+def hitorstay(): #hit or stay for all players including dealer
+   
+
+    for i in range(0,5):
+        #you
+        if seatingorder[i] == name:
+                while sum(playercard) < 21:
+                    input1 = str(input('Would you like to hit or stay? '))
+                    if input1 == "hit":
+                        playercard.append(random.randint(1,11))
+                        total = sum(playercard)
+                        print ('Your new total is now ' + str(total))
+                    if sum(playercard)>21:
+                        print ('You busted')
+                        playercard.append(0)
+                    if sum(playercard) == 21:
+                        print('You have 21, please wait for the rest of the hands to be dealt')   
+                    if input1 == 'stay':
+                        break
+                        
+                if sum(playercard) < 21:
+                    print('You stand with the cards: '+ str(playercard))
+        
+                
+                    
+            #player 2
+        elif seatingorder[i] == 'player 2':
+            print('It is now player 2s turn')
+            while sum(playercard2) < 19:
+                playercard2.append(random.randint(1,11))
+                totalplayer2 = sum(playercard2)
+                if totalplayer2 > 21: 
+                    print('player 2 has busted')
+                    playercard2.append(0)
+                if totalplayer2 == 21:
+                    print('player 2 has 21, they stand')
+            else: 
+                print('player 2 has a total of ' + str(sum(playercard2)))
+
+
+            #player 3
+
+           
+        elif seatingorder[i] == 'player 3':
+            print('Now it is player 3s turn')
+            while sum(playercard3) < 15:
+                playercard3.append(random.randint(1,11))
+                totalplayer3 = sum(playercard3)
+                if totalplayer3 == 21:
+                    print('player 3 has 21, they stand')
+            else: 
+                print('player 3 has a total of ' + str(sum(playercard3)))
+            if sum(playercard3) > 21: 
+                    print('player 3 has busted')
+                    playercard3.append(0)
+            
+            
+            #player 4
+            
+       
+        elif seatingorder[i] == 'player4':
+            print('Now it is player 4s turn')
+            while sum(playercard4) < 17:
+                playercard4.append(random.randint(1,11))
+                totalplayer4 = sum(playercard4)
+                if totalplayer4 > 21: 
+                    print('player 4 has busted')
+                    playercard4.append(0)
+                if totalplayer4 == 21:
+                    print('player 4 has 21, they stand')
+            else: 
+                print('player 4 has a total of ' + str(sum(playercard4)))
+    
+    while sum(dealercard)<17:
+                dealercard.append(random.randint(1,11))
+                totaldealer = sum(dealercard)
+                if totaldealer > 21:
+                    print ('Dealer has busted')
+                    dealercard.append(0)
+                if totaldealer == 21:
+                    ('Dealer has 21, I hope you were lucky!')
+
+    print('The dealer has a total of ' + str(sum(dealercard)))
+    print('You have a total of ' + str(sum(playercard)))
+    
+
+    #calculating win and loss with bets
+    x = playercard.count(0)
+    y = dealercard.count(0)
+    a = playercard2.count(0)
+    b = playercard3.count(0)
+    c = playercard4.count(0)
+    
+    #your bets
+    if x == 1:
+       print ("You busted so you have Lost")
+       newmoney0_1 = int(money[0] - bet)
+       print('You now have ' + str(newmoney0_1) + ' dollars left.')
+        
+    if x == 0 and y == 0 and sum(dealercard) > sum(playercard):
+        print('You lost')
+        newmoney0_1 = int(money[0]- bet)
+        print('You now have ' + str(newmoney0_1)  + ' dollars left.')
+    
+    if x == 0 and sum(dealercard) < sum(playercard):
+        print('You won')
+        newmoney0_1 = int(money[0] + bet)
+        print('You now have ' + str(newmoney0_1)  + ' dollars left.')
+
+    if x == 0 and y == 0 and sum(dealercard) == sum(playercard):
+        print('You have tied with the dealer, so you will keep your money')
+        newmoney0_1 = int(money[0])
+        print('You have ' + str(newmoney0_1) + ' dollars left.')
+
+    #player2 bets
+    if a == 1:
+       print ("player 2 busted so they have Lost")
+       newmoney2_1 = int(money2[0] - bet2)
+       print('player 2 has ' + str(newmoney2_1) + ' dollars left.')
+
+        
+    if a == 0 and y == 0 and sum(dealercard) > sum(playercard2):
+        print('player 2 has lost')
+        newmoney2_1 = int(money2[0]- bet2)
+        print('player 2 has ' + str(newmoney2_1) + ' dollars left.')
+    
+    if a == 0 and sum(dealercard) < sum(playercard2):
+        print('player 2 has won')
+        newmoney2_1 = int(money2[0] + bet2)
+        print('player 2 has ' + str(newmoney2_1) + ' dollars left.')
+
+    if a == 0 and a == 0 and sum(dealercard) == sum(playercard2):
+        print('player 2 has tied with the dealer, so they will keep their money')
+        newmoney2_1 = int(money2[0])
+        print('player 2 has ' + str(newmoney2_1) + ' dollars left.')
+
+
+    #player3 bets
+    if b == 1:
+       print ("player 3 busted so they have Lost")
+       newmoney3_1 = int(money3[0] - bet3)
+       print('player 3 has ' + str(newmoney3_1) + ' dollars left.')
+
+
+    if b == 0 and y == 0 and sum(dealercard) > sum(playercard3):
+        print('player 3 has lost')
+        newmoney3_1 = int(money3[0]- bet3)
+        print('player 3 has ' + str(newmoney3_1) + ' dollars left.')
+    
+    if b == 0 and sum(dealercard) < sum(playercard3):
+        print('player 3 has won')
+        newmoney3_1 = int(money3[0] + bet3)
+        print('player 3 has ' + str(newmoney3_1) + ' dollars left.')
+
+    if b == 0 and b == 0 and sum(dealercard) == sum(playercard3):
+        print('player 3 has tied with the dealer, so they will keep their money')
+        newmoney3_1 = int(money3[0])
+        print('player 3 has ' + str(newmoney3_1) + ' dollars left.')
+
+
+
+    #player4 bets
+    if c == 1:
+       print ("player 4 busted so they have Lost")
+       newmoney4_1 = int(money4[0] - bet4)
+       print('player 4 has ' + str(newmoney4_1) + ' dollars left.')
+
+        
+    if c == 0 and y == 0 and sum(dealercard) > sum(playercard4):
+        print('player 4 has lost')
+        newmoney4_1 = int(money4[0]- bet4)
+        print('player 4 has ' + str(newmoney4_1) + ' dollars left.')
+    
+    if c == 0 and sum(dealercard) < sum(playercard4):
+        print('player 4 has won')
+        newmoney4_1 = int(money4[0] + bet4)
+        print('player 4 has ' + str(newmoney4_1) + ' dollars left.')
+
+    if c == 0 and c == 0 and sum(dealercard) == sum(playercard4):
+        print('player 4 has tied with the dealer, so they will keep their money')
+        newmoney4_1 = int(money4[0])
+        print('player 4 has ' + str(newmoney4_1) + ' dollars left.')
+
+
+
+
+    if y == 1:
+        print ('The dealer has busted, so you have won!')
+        if x == 1: 
+            print('Sorry but you busted so you win nothing')
+        else:
+            newmoney0_1 = int(money[0] +  bet)
+        if a == 1:
+            print('player 2 busted so they win nothing')
+        else:
+            newmoney2_1 =  int(money2[0] +  bet2)
+        if b == 1:
+            print('player 3 busted so they win nothing')
+        else:
+            newmoney3_1 =  int(money3[0] +  bet3)
+        if c ==1: 
+            print('player 4 busted so they win nothing')
+        else:
+            newmoney4_1 =  int(money4[0] +  bet4)
+        print('You now have ' + str(newmoney0_1)  + ' dollars left.')
+        print('player 2 has ' + str(newmoney2_1) + ' dollars left.')
+        print('player 3 has ' + str(newmoney3_1) + ' dollars left.')
+        print('player 4 has ' + str(newmoney4_1) + ' dollars left.')
+    
+    money[0] = newmoney0_1
+    money2[0]= newmoney2_1
+    money3[0]= newmoney3_1
+    money4[0]= newmoney4_1
+    print(money[0])
+    print(money2[0])
+    print(money3[0])
+    print(money4[0])
+    
+    return money and money2 and money4 and money4
+
+
+
+     
+
+
+
+
+playAgain = "yes" #Once you get to the end of game summary you are then asked if you want to play again which will run all the functions through again 
+while playAgain == "yes" or playAgain == "y": 
+    cards()
+    hitorstay()
+    playAgain = input("If you would like to play again, then please yes or y to continue: ")
+    
